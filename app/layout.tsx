@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { NextUIProvider } from "@nextui-org/react";
+import NextUILayout from "./NextUIProvider";
+import NavbarComponent from "@/components/navbar/NavbarComponent";
+import { FooterComponent } from "@/components/footer/FooterComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}  >
+      
+        <NextUILayout>
+        <NavbarComponent/>
+         {children}
+
+         <FooterComponent/>
+        </NextUILayout>
+        </body>
     </html>
   );
 }
