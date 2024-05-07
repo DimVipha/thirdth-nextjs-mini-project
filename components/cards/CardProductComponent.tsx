@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Card,
     CardHeader,
@@ -11,22 +11,57 @@ import {
 import { ProductType } from "@/type/ProductType";
 import { BsCart4 } from "react-icons/bs";
 import { addToCart } from "@/redux/feature/cart/cartSlice";
+import { useAppDispatch } from "@/redux/hook";
+import Link from "next/link";
 
 export default function CardProductComponent({
+    id,
     name,
     image,
     desc,
     price,
+    category,
 }: ProductType) {
+    const dispatch = useAppDispatch();
+    const [cart, setCart] = useState<ProductType[]>([]);
+  
+    useEffect(() => {
+      const storedCart = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      ) as ProductType[];
+      setCart(storedCart);
+    }, []);
+  
+    useEffect(() => {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
+  
+    const handleAddToCart = () => {
+      dispatch(
+        addToCart({
+          id: id,
+          name: name,
+          image: image,
+          price: price,
+          desc: desc,
+          category: category,
+          quantity: 1
+        })
+      );
+    };
+  
+
     return (
         <Card shadow="sm" className="border-collapse-2 p-0 rounded-sm">
             <CardBody className="overflow-visible rounded-none m-0 ">
+                <Link href={`/product/${id}`} passHref>
                 <Image
                     width="100%"
                     alt="image"
                     src={image}
                     className="w-full rounded-sm object-cover h-[200px]"
                 />
+                </Link>
             </CardBody>
             <CardFooter className="text-small m-0 py-0 w-full ">
                 <div className=" w-full">
@@ -35,7 +70,7 @@ export default function CardProductComponent({
                     {/* <h3 className="text-3xl text-orange-500">
                             <BsCart4 />
                         </h3> */}
-                    <Button className="border-2 mb-4 mt-1 rounded-sm  bg-black text-gray-200 hover:bg-gray-100 hover:border-2 hover:text-black text-center w-full font-medium  py-3">
+                    <Button onClick={handleAddToCart} className="border-2 mb-4 mt-1 rounded-sm  bg-black text-gray-200 hover:bg-gray-100 hover:border-2 hover:text-black text-center w-full font-medium  py-3">
                         Add to Cart
                     </Button>
                 </div>

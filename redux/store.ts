@@ -6,9 +6,15 @@ import cartSlice from "./feature/cart/cartSlice";
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      // [ecommerceApi.reducerPath]: ecommerceApi.reducer,
       cart: cartSlice,
+      // userProfile: userProfileSlice,
     },
-  });
+  //   middleware: (getDefaultMiddleware) =>
+  //     getDefaultMiddleware().concat(ecommerceApi.middleware),
+  // 
+}
+);
 };
 
 export type AppStore = ReturnType<typeof makeStore>;

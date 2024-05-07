@@ -1,46 +1,4 @@
 
-// import React from "react";
-// import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
-// import Image from "next/image";
-
-// export default function NavbarComponent() {
-//   return (
-//     <Navbar >
-//       <NavbarBrand>
-//         {/* <AcmeLogo /> */}
-//         <Image src="" width={100} height={100 } alt="logo"/>
-//         <p className="font-bold text-inherit">ACME</p>
-//       </NavbarBrand>
-//       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-//         <NavbarItem>
-//           <Link color="foreground" href="#">
-//             Features
-//           </Link>
-//         </NavbarItem>
-//         <NavbarItem isActive>
-//           <Link href="#" aria-current="page">
-//             Customers
-//           </Link>
-//         </NavbarItem>
-//         <NavbarItem>
-//           <Link color="foreground" href="#">
-//             Integrations
-//           </Link>
-//         </NavbarItem>
-//       </NavbarContent>
-//       <NavbarContent justify="end">
-//         <NavbarItem className="hidden lg:flex">
-//           <Link href="#">Login</Link>
-//         </NavbarItem>
-//         <NavbarItem>
-//           <Button as={Link} color="primary" href="#" variant="flat">
-//             Sign Up
-//           </Button>
-//         </NavbarItem>
-//       </NavbarContent>
-//     </Navbar>
-//   );
-// }
 
 
 "use client";
@@ -60,9 +18,30 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { navbarItem } from "./menu";
+import Category from "./Cart";
+import { ReactNode } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectProducts } from "@/redux/feature/cart/cartSlice";
+import { ProductType } from "@/type/ProductType";
+// 
+
+type MenuItem = {
+  name: ReactNode;
+  path: string;
+  active: boolean;
+};
 
 export default function NavbarComponent() {
   const pathname = usePathname();
+  // const [menu, setMenu] = useState<MenuItem[]>(MenuList);
+  // const [menuOpen, setMenuOpen] = useState(false);
+  const cartItems = useSelector(selectProducts);
+
+  // useEffect(() => {
+  //   dispatch(fetchUserProfile());
+  // }, [dispatch]);
+
   if(pathname === "/login" ){
     return null
   }
@@ -122,9 +101,10 @@ export default function NavbarComponent() {
   <path d="M12.268 6A2 2 0 0 0 14 9h1v1a2 2 0 0 0 3.04 1.708l-.311 1.496a1 1 0 0 1-.979.796H8.605l.208 1H16a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L4.686 5H4a1 1 0 0 1 0-2h1.5a1 1 0 0 1 .979.796L6.939 6h5.329Z"/>
   <path d="M18 4a1 1 0 1 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0V8h2a1 1 0 1 0 0-2h-2V4Z"/>
 </svg> */}
-        <NavbarItem className="relative">
-            <span className="text-3xl text-orange-500"><BsCart4/></span>
-            <span className="absolute -top-1 text-xs left-4 px-1 rounded-lg bg-orange-500 text-gray-200">0</span>
+        <NavbarItem >
+          <Category  cartItems={cartItems}/>
+            {/* <span className="text-3xl text-orange-500"><BsCart4/></span>
+            <span className="absolute -top-1 text-xs left-4 px-1 rounded-lg bg-orange-500 text-gray-200">{}</span> */}
         </NavbarItem>
         <NavbarItem  className="hidden sm:flex">
           <Button as={Link} className=" from-blue-500 text-lg font-bold text-white bg-blue-500 p-4 rounded-lg" href="/login" variant="flat">

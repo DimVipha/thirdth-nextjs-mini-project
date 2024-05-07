@@ -5,6 +5,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import NextUILayout from "./NextUIProvider";
 import NavbarComponent from "@/components/navbar/NavbarComponent";
 import { FooterComponent } from "@/components/footer/FooterComponent";
+import SessionWrapper from "./SessionProvider";
+import StoreProvider from "./StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +22,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <SessionWrapper>
+        
       <body className={inter.className}  >
-      
+        <StoreProvider>
         <NextUILayout>
         <NavbarComponent/>
          {children}
 
          <FooterComponent/>
         </NextUILayout>
+        </StoreProvider>
         </body>
+        </SessionWrapper>
     </html>
   );
 }

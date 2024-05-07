@@ -33,25 +33,22 @@ export default async function Home() {
             {/* <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-screen-xl justify-center mx-auto gap-5 grid-cols-1 sm:grid-cols-2 grid md:grid-cols-3 lg:grid-cols-4">       */}
             <div className="max-w-screen-xl mx-auto  grid sm:grid-cols-2 max-sm:p-16 max-sm:mx-6 md:grid-cols-3  lg:grid-cols-4 gap-6 ">
                 <Suspense fallback={<LoadingComponent />}>
-                    {products.map((product: ProductType) => {
-                        return (
-                            <Link
-                                href={`/product/${product.id}`}
-                                key={product.id}
-                            >
+                    {products.map((product: ProductType)=>
+                        (
+                            <div key={product.id}>
                                 <CardProductComponent
                                     image={product.image}
                                     seller={product.seller}
                                     name={product.name}
                                     desc={product.desc}
                                     price={product.price}
-                                    category={""}
-                                    quantity={0}
-                                    id={0}
+                                    category={product.category}
+                                    quantity={product.quantity}
+                                    id={product.id}
                                 />
-                            </Link>
-                        );
-                    })}
+                                </div>
+                        )
+                    )}
                 </Suspense>
             </div>
             {/* <div className="max-w-screen-xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> 
